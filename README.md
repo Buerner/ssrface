@@ -1,4 +1,4 @@
-# laproque
+# ssrface
 
 C++ interface providing several tools to interact with the audio scene in the [SoundScape Renderer](https://github.com/SoundScapeRenderer/) using it's TCP/IP interface.
 

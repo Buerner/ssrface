@@ -1,11 +1,17 @@
 
 CC = g++
 CFLAGS = -Wall -std=c++11 -O3
+LIBS = -lssrface
 
 OS := $(shell uname)
 
 ifeq ($(OS),Darwin)
-    CFLAGS +=  -mmacosx-version-min=10.10
+    CFLAGS += -mmacosx-version-min=10.7
+	CFLAGS += -stdlib=libc++
+endif
+
+ifeq ($(OS),Linux)
+    LIBS += -lpthread
 endif
 
 SEARCH_PATHS = -I./include
@@ -22,7 +28,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(notdir $(SRC:.cpp=.o) ) )
 
 
 tester: lib
-	$(CC) $(CFLAGS) $(SEARCH_PATHS) tester/main.cpp -Lbuild/ -lssrface -o $(BUILD_DIR)ssrface_tester
+	$(CC) $(CFLAGS) $(SEARCH_PATHS) tester/main.cpp -Lbuild/ $(LIBS) -o $(BUILD_DIR)ssrface_tester
 
 .PHONY: lib
 lib: mk_build_dir $(OBJ)
@@ -44,5 +50,3 @@ doc:
 clean:
 	rm -rf $(OBJ) $(BUILD_DIR)*
 	rm -rf $(DOC_DIR)
-
-
